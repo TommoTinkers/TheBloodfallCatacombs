@@ -1,12 +1,18 @@
-﻿using The_Bloodfall_Catacombs.Rooms;
+﻿using System.Collections.Generic;
+using System.Linq;
+using The_Bloodfall_Catacombs.CommandHandlers;
+using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.UI.Console;
+using static The_Bloodfall_Catacombs.UI.Console.ConsoleUtils;
 using static System.Console;
 
 namespace The_Bloodfall_Catacombs
 {
 	internal static class Program
 	{
+		private static GameState gameState;
+
 		public static void Main()
 		{
 			WriteLine("Welcome to THE BLOODFALL CATACOMBS");
@@ -16,62 +22,56 @@ namespace The_Bloodfall_Catacombs
 			cell.SetExits((ExitDirection.North, corridor));
 			corridor.SetExits((ExitDirection.South, cell));
 			
-			var gameState = CreateGameState(cell);
-
+			gameState = CreateGameState(cell);
+			
 			while (true)
 			{
 				var input = GetLine();
+				var words = input.Split(' ');
 
-				if (input == "look")
+				var command = words.FirstOrDefault();
+				var arguments = words.Skip(1);
+				
+				if (command == string.Empty)
 				{
-					WriteLine(gameState.Look());
+					WriteLine("Please enter something!");
+					continue;
 				}
 
-				if (input == "move")
-				{
-					var direction = GetLine("In which direction?");
-					string response;
-					switch (direction)
-					{
-						case "north":
-							response = gameState.Move(ExitDirection.North);
-							break;
-						case "south":
-							response = gameState.Move(ExitDirection.South);
-							break;
-						case "east":
-							response = gameState.Move(ExitDirection.East);
-							break;
-						case "west":
-							response = gameState.Move(ExitDirection.West);
-							break;
-						default:
-							response = "That is NOT a direction. Silly person.";
-							break;
-					}
-					
-					WriteLine(response);
-				}
+				ProcessCommand(command, arguments);
+
 			}
 		}
 
-		private static string GetLine(string prompt = null)
+		private static void ProcessCommand(string command, IEnumerable<string> arguments)
 		{
-			if (prompt != null)
+			switch (command)
 			{
-				WriteLine(prompt);
+				case "look":
+					gameState.ExecuteCommand(Command.Look, arguments);
+					break;
+				case "move":
+					gameState.ExecuteCommand(Command.Move, arguments);
+					break;
 			}
-			
-			Write("->");
-			var input = ReadLine().ToLowerInvariant();
-			return input;
 		}
-
+		
 		private static GameState CreateGameState(Room cell)
 		{
-			var gameState = new GameState(cell);
-			gameState.CurrentRoom.RegisterHandlerAndCallIt(room => ConsoleUtils.SetWindowTitleToCurrentLocation(room.Name));
-			return gameState;
+			var commandHandler = CreateCommandHandler();
+			var state = new GameState(cell, commandHandler);
+			
+			state.CurrentRoom.RegisterHandlerAndCallIt(room => SetWindowTitleToCurrentLocation(room.Name));
+			return state;
+		}
+
+		private static CommandHandler CreateCommandHandler()
+		{
+			var commandHandler = new CommandHandler();
+			commandHandler.AddCommandHandler(Command.Look, Handlers.HandleLookCommand);
+			commandHandler.AddCommandHandler(Command.Move, Handlers.HandleMoveCommand);
+
+			return commandHandler;
 		}
 	}
 }
