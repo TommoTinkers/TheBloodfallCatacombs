@@ -5,7 +5,7 @@ namespace The_Bloodfall_Catacombs.Utils
 	public interface IBindableProperty<TProp>
 	{
 		void RegisterHandlerAndCallIt(Action<TProp> handler);
-		event Action<TProp> OnChange;
+		event Action<TProp> OnSet;
 		TProp Value { get; }
 	}
 
@@ -13,11 +13,11 @@ namespace The_Bloodfall_Catacombs.Utils
 	{
 		private TProp value;
 
-		public event Action<TProp> OnChange;
+		public event Action<TProp> OnSet;
 
 		public void RegisterHandlerAndCallIt(Action<TProp> handler)
 		{
-			OnChange += handler;
+			OnSet += handler;
 			handler?.Invoke(value);
 		}
 		
@@ -27,7 +27,7 @@ namespace The_Bloodfall_Catacombs.Utils
 			set
 			{
 				this.value = value;
-				OnChange?.Invoke(value);
+				OnSet?.Invoke(value);
 			}
 		}
 	}
