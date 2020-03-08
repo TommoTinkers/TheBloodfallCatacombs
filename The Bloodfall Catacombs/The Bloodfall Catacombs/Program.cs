@@ -4,6 +4,7 @@ using The_Bloodfall_Catacombs.Commands;
 using The_Bloodfall_Catacombs.Objects;
 using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
+using The_Bloodfall_Catacombs.Things;
 using static The_Bloodfall_Catacombs.UI.Console.ConsoleUtils;
 using static System.Console;
 
@@ -63,6 +64,8 @@ namespace The_Bloodfall_Catacombs
 			var commandHandler = new CommandHandler();
 			commandHandler.AddCommandHandler(Command.Look, Handlers.HandleLookCommand);
 			commandHandler.AddCommandHandler(Command.Move, Handlers.HandleMoveCommand);
+			commandHandler.AddCommandHandler(Command.Take, Handlers.HandleTakeCommand);
+			commandHandler.AddCommandHandler(Command.Inventory, Handlers.HandleInventoryCommand);
 			commandHandler.AddCommandHandler(Command.BadCommand, Handlers.HandleBadCommand);
 
 			return commandHandler;

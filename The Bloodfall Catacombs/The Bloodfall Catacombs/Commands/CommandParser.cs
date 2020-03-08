@@ -10,6 +10,10 @@ namespace The_Bloodfall_Catacombs.Commands
 					return Command.Look;
 				case "move":
 					return Command.Move;
+				case "take":
+					return Command.Take;
+				case "inventory":
+					return Command.Inventory;
 				default:
 					return Command.BadCommand;
 			}

@@ -43,5 +43,40 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 		{
 			WriteLine("I do not know how to do this.");
 		}
+
+		public static void HandleTakeCommand(GameState gameState, IEnumerable<string> arguments)
+		{
+			var objectName = arguments.FirstOrDefault();
+
+			if (string.IsNullOrEmpty(objectName))
+			{
+				WriteLine("Take what?");	
+			}
+			
+			var roomObjects = gameState.CurrentRoom.Value.Things;
+			var objectToTake = roomObjects.FirstOrDefault(o => o.Name.ToLower() == objectName);
+
+			if (objectToTake == null)
+			{
+				WriteLine("There isn't one of those here");
+				return;
+			}
+			
+			if (!objectToTake.IsTakeable)
+			{
+				WriteLine("You cannot take that");
+			}
+			else
+			{
+				gameState.CurrentRoom.Value.RemoveThing(objectToTake);
+				gameState.PlayerState.Inventory.AddThings(objectToTake);
+				WriteLine($"You took the {objectToTake.Name}!");
+			}
+		}
+
+		public static void HandleInventoryCommand(GameState gameState, IEnumerable<string> arguments)
+		{
+			WriteLine($"You are carrying...\n{gameState.PlayerState.Inventory.GetThingsDescription()}");
+		}
 	}
 }

@@ -1,4 +1,4 @@
-namespace The_Bloodfall_Catacombs.Objects
+namespace The_Bloodfall_Catacombs.Things
 {
 	public class Thing
 	{

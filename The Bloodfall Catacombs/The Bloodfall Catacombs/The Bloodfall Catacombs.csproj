@@ -42,11 +42,13 @@
     <Compile Include="CommandHandlers\Handlers.cs" />
     <Compile Include="Commands\CommandParser.cs" />
     <Compile Include="GameInfo.cs" />
+    <Compile Include="Player\PlayerState.cs" />
     <Compile Include="Things\Thing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rooms\Room.cs" />
     <Compile Include="State\GameState.cs" />
+    <Compile Include="Things\ThingContainer.cs" />
     <Compile Include="UI\Console\ConsoleUtils.cs" />
     <Compile Include="Utils\BindableProperty.cs" />
   </ItemGroup>

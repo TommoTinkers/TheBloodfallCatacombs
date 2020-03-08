@@ -11,15 +11,11 @@ namespace The_Bloodfall_Catacombs.Rooms
 		East,
 		West
 	}
-	public class Room
+	public class Room : ThingContainer
 	{
 		public string Name { get; }
 		public string Description { get; }
-
-		private readonly List<Thing> things = new List<Thing>();
-
-		public IEnumerable<Thing> Things => things;
-
+		
 		public Room this[ExitDirection direction]
 		{
 			get { return exits.FirstOrDefault(kvp => kvp.Key == direction).Value; }
@@ -39,24 +35,10 @@ namespace The_Bloodfall_Catacombs.Rooms
 			this.exits = exits.ToDictionary(exit => exit.direction, exit => exit.room);
 		}
 
-		public void AddThings(params Thing[] thingsToAdd)
-		{
-			things.AddRange(thingsToAdd);
-		}
-
-		public void RemoveThing(Thing thingToRemove)
-		{
-			things.Remove(thingToRemove);
-		}
 
 		public string LookDescription()
 		{
 			return $"{Description}\nIn this room there are: {GetThingsDescription()}";
-		}
-
-		private string GetThingsDescription()
-		{
-			return things.Select(t => t.Name).Aggregate(string.Empty, (a, b) => $"{a}\n{b}");
 		}
 	}
 }
