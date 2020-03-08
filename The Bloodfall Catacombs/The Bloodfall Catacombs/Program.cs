@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using The_Bloodfall_Catacombs.CommandHandlers;
 using The_Bloodfall_Catacombs.Commands;
+using The_Bloodfall_Catacombs.Objects;
 using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
-using The_Bloodfall_Catacombs.UI.Console;
 using static The_Bloodfall_Catacombs.UI.Console.ConsoleUtils;
 using static System.Console;
 
@@ -18,8 +18,14 @@ namespace The_Bloodfall_Catacombs
 			WriteLine("Welcome to THE BLOODFALL CATACOMBS");
 			var cell = new Room("Cell", "A small cell with no windows");
 			var corridor = new Room("Corridor", "A fittingly omnious corridor, seemingly endless in both directions." );
+
+			var skeleton = new Thing("Skeleton", "Its a skeleton. It looks like it has been here for a long time.",
+				false);
+			var key = new Thing("Key", "A large iron key.", true);
 			
 			cell.SetExits((ExitDirection.North, corridor));
+			cell.AddThings(skeleton, key);
+			
 			corridor.SetExits((ExitDirection.South, cell));
 			
 			gameState = CreateGameState(cell);
@@ -42,8 +48,6 @@ namespace The_Bloodfall_Catacombs
 				gameState.ExecuteCommand(command, arguments);
 			}
 		}
-
-
 		
 		private static GameState CreateGameState(Room cell)
 		{
