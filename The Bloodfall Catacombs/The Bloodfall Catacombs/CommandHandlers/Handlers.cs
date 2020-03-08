@@ -39,5 +39,9 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 			WriteLine(response);
 		}
 
+		public static void HandleBadCommand(GameState arg1, IEnumerable<string> arg2)
+		{
+			WriteLine("I do not know how to do this.");
+		}
 	}
 }

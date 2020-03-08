@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using The_Bloodfall_Catacombs.CommandHandlers;
+using The_Bloodfall_Catacombs.Commands;
 using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.UI.Console;
@@ -29,32 +29,21 @@ namespace The_Bloodfall_Catacombs
 				var input = GetLine();
 				var words = input.Split(' ');
 
-				var command = words.FirstOrDefault();
+				var commandInput = words.FirstOrDefault();
 				var arguments = words.Skip(1);
 				
-				if (command == string.Empty)
+				if (commandInput == string.Empty)
 				{
 					WriteLine("Please enter something!");
 					continue;
 				}
 
-				ProcessCommand(command, arguments);
-
+				var command = CommandParser.GetCommand(commandInput);
+				gameState.ExecuteCommand(command, arguments);
 			}
 		}
 
-		private static void ProcessCommand(string command, IEnumerable<string> arguments)
-		{
-			switch (command)
-			{
-				case "look":
-					gameState.ExecuteCommand(Command.Look, arguments);
-					break;
-				case "move":
-					gameState.ExecuteCommand(Command.Move, arguments);
-					break;
-			}
-		}
+
 		
 		private static GameState CreateGameState(Room cell)
 		{
@@ -70,6 +59,7 @@ namespace The_Bloodfall_Catacombs
 			var commandHandler = new CommandHandler();
 			commandHandler.AddCommandHandler(Command.Look, Handlers.HandleLookCommand);
 			commandHandler.AddCommandHandler(Command.Move, Handlers.HandleMoveCommand);
+			commandHandler.AddCommandHandler(Command.BadCommand, Handlers.HandleBadCommand);
 
 			return commandHandler;
 		}

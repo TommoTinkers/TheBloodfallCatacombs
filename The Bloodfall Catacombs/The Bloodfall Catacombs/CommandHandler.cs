@@ -7,7 +7,8 @@ namespace The_Bloodfall_Catacombs
 	public enum Command
 	{
 		Look,
-		Move
+		Move,
+		BadCommand
 	}
 	
 	public class CommandHandler
