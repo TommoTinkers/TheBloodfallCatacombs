@@ -33,18 +33,7 @@ namespace The_Bloodfall_Catacombs
 			while (true)
 			{
 				var input = GetLine();
-				var words = input.Split(' ');
-
-				var commandInput = words.FirstOrDefault();
-				var arguments = words.Skip(1);
-				
-				if (commandInput == string.Empty)
-				{
-					WriteLine("Please enter something!");
-					continue;
-				}
-
-				var command = CommandParser.GetCommand(commandInput);
+				var (command, arguments) = CommandParser.GetCommand(input);
 				gameState.ExecuteCommand(command, arguments);
 			}
 		}
@@ -67,6 +56,7 @@ namespace The_Bloodfall_Catacombs
 			commandHandler.AddCommandHandler(Command.Drop, Handlers.HandleDropCommand);
 			commandHandler.AddCommandHandler(Command.Inventory, Handlers.HandleInventoryCommand);
 			commandHandler.AddCommandHandler(Command.BadCommand, Handlers.HandleBadCommand);
+			commandHandler.AddCommandHandler(Command.LookAt, Handlers.HandleLookAtCommand);
 
 			return commandHandler;
 		}

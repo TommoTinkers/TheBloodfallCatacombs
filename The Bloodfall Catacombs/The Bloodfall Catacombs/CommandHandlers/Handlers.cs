@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
+using The_Bloodfall_Catacombs.Things;
 using static System.Console;
 
 namespace The_Bloodfall_Catacombs.CommandHandlers
@@ -99,6 +101,25 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 		public static void HandleInventoryCommand(GameState gameState, IEnumerable<string> arguments)
 		{
 			WriteLine($"You are carrying...{gameState.PlayerState.Inventory.GetThingsDescription()}");
+		}
+
+		public static void HandleLookAtCommand(GameState gameState, IEnumerable<string> arguments)
+		{
+			var subject = arguments.FirstOrDefault();
+			if (string.IsNullOrWhiteSpace(subject))
+			{
+				WriteLine("Look at what?");
+				return;
+			}
+
+			var things = gameState.CurrentRoom.Value.Things.Concat(gameState.PlayerState.Inventory.Things);
+			var thingToLookAt = things.FirstOrDefault(t => t.Name.ToLower() == subject);
+			if (thingToLookAt == null)
+			{
+				WriteLine($"I can't see a {subject} anywhere.");
+				return;
+			}
+			WriteLine(thingToLookAt.Description);
 		}
 	}
 }
