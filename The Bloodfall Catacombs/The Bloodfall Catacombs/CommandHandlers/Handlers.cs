@@ -44,6 +44,28 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 			WriteLine("I do not know how to do this.");
 		}
 
+		public static void HandleDropCommand(GameState gameState, IEnumerable<string> arguments)
+		{
+			var objectName = arguments.FirstOrDefault();
+			if (string.IsNullOrEmpty(objectName))
+			{
+				WriteLine("Drop what?");	
+			}
+
+			var inventoryObjects = gameState.PlayerState.Inventory.Things;
+			var objectToDrop = inventoryObjects.FirstOrDefault(o => o.Name.ToLower() == objectName);
+			
+			if (objectToDrop == null)
+			{
+				WriteLine("You are not carrying that.");
+				return;
+			}
+			
+			gameState.CurrentRoom.Value.AddThings(objectToDrop);
+			gameState.PlayerState.Inventory.RemoveThing(objectToDrop);
+			WriteLine($"You dropped the {objectToDrop.Name}!");
+		}
+
 		public static void HandleTakeCommand(GameState gameState, IEnumerable<string> arguments)
 		{
 			var objectName = arguments.FirstOrDefault();
@@ -76,7 +98,7 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 
 		public static void HandleInventoryCommand(GameState gameState, IEnumerable<string> arguments)
 		{
-			WriteLine($"You are carrying...\n{gameState.PlayerState.Inventory.GetThingsDescription()}");
+			WriteLine($"You are carrying...{gameState.PlayerState.Inventory.GetThingsDescription()}");
 		}
 	}
 }

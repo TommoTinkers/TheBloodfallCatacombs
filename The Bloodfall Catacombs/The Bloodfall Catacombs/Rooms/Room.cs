@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using The_Bloodfall_Catacombs.Objects;
+using The_Bloodfall_Catacombs.Things;
 
 namespace The_Bloodfall_Catacombs.Rooms
 {

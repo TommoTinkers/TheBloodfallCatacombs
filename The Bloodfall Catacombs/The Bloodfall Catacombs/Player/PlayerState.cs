@@ -1,9 +1,9 @@
-using The_Bloodfall_Catacombs.Objects;
+using The_Bloodfall_Catacombs.Things;
 
 namespace The_Bloodfall_Catacombs.Player
 {
 	public class PlayerState
 	{
-		public ThingContainer Inventory => new ThingContainer();
+		public ThingContainer Inventory { get; } = new ThingContainer();
 	}
 }

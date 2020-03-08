@@ -14,6 +14,8 @@ namespace The_Bloodfall_Catacombs.Commands
 					return Command.Take;
 				case "inventory":
 					return Command.Inventory;
+				case "drop":
+					return Command.Drop;
 				default:
 					return Command.BadCommand;
 			}

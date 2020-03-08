@@ -10,7 +10,8 @@ namespace The_Bloodfall_Catacombs
 		Move,
 		BadCommand,
 		Take,
-		Inventory
+		Inventory,
+		Drop
 	}
 	
 	public class CommandHandler

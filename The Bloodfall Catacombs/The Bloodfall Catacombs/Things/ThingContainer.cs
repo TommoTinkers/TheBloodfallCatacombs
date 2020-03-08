@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using The_Bloodfall_Catacombs.Things;
 
-namespace The_Bloodfall_Catacombs.Objects
+namespace The_Bloodfall_Catacombs.Things
 {
 	public class ThingContainer
 	{
