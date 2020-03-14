@@ -26,9 +26,7 @@ namespace The_Bloodfall_Catacombs.State
 		{
 			CommandHandler.ExecuteCommand(command, this, arguments);
 		}
-
-		public string Look() => currentRoom.Value.LookDescription();
-
+		
 		public string Move(ExitDirection direction)
 		{
 			var destinationRoom = currentRoom.Value[direction];

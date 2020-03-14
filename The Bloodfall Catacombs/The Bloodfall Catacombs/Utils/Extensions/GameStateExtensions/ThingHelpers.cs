@@ -11,5 +11,23 @@ namespace The_Bloodfall_Catacombs.Utils.Extensions.GameStateExtensions
 		{
 			return gameState.CurrentRoom.Value.Things.Concat(gameState.PlayerState.Inventory.Things);
 		}
+
+		public static string GetDisplayString(this IEnumerable<Thing> things, string displayIfNone = "",
+			string displayIfOne = null, string displayIfSome = null)
+		{
+			
+			var count = things.Count();
+			
+			switch (count)
+			{
+				case 0:
+					return displayIfNone;
+				case 1:
+					return $"{displayIfOne} {things.Single().Name}";
+			}
+			
+			return $"{displayIfSome}\n" +
+			things.Select(t => t.Name).Aggregate((a, b) => $"{a}\n{b}");
+		}
 	}
 }

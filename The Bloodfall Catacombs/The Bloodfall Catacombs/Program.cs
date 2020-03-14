@@ -5,7 +5,7 @@ using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.Things;
 using The_Bloodfall_Catacombs.Things.Usables;
 using static The_Bloodfall_Catacombs.UI.Console.ConsoleUtils;
-using static System.Console;
+using static The_Bloodfall_Catacombs.UI.Display.TextDisplayer;
 
 namespace The_Bloodfall_Catacombs
 {
@@ -15,7 +15,7 @@ namespace The_Bloodfall_Catacombs
 
 		public static void Main()
 		{
-			WriteLine("Welcome to THE BLOODFALL CATACOMBS");
+			DisplayLine("Welcome to THE BLOODFALL CATACOMBS");
 			var cell = new Room("Cell", "A small cell with no windows");
 			var laboratory = new Room("Laboratory", "This room looks like a laboratory that has been smashed up.");
 			var corridor = new Room("Corridor", "A fittingly omnious corridor, seemingly endless in both directions." );
@@ -23,12 +23,13 @@ namespace The_Bloodfall_Catacombs
 			var skeleton = new Thing("Skeleton", "Its a skeleton. It looks like it has been here for a long time.",
 				false);
 			var key = new Key("Key", "A large iron key.", true);
+			var banana = new Thing("Banana", "A banana disguised as an apple.", true);
 			var door = new LockedDoor("Door", "A large wooden door with a keyhole", false, key, laboratory);
 			
 			laboratory.SetExits((ExitDirection.South, corridor));
 			corridor.AddThings(door);
 			cell.SetExits((ExitDirection.North, corridor));
-			cell.AddThings(skeleton, key);
+			cell.AddThings(skeleton, key, banana);
 			
 			corridor.SetExits((ExitDirection.South, cell));
 			

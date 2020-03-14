@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace The_Bloodfall_Catacombs.Things
 {
@@ -17,11 +16,6 @@ namespace The_Bloodfall_Catacombs.Things
 		public void RemoveThing(Thing thingToRemove)
 		{
 			things.Remove(thingToRemove);
-		}
-
-		public string GetThingsDescription()
-		{
-			return Things.Select(t => t.Name).Aggregate(string.Empty, (a, b) => $"{a}\n{b}");
 		}
 	}
 }

@@ -56,6 +56,7 @@
     <Compile Include="Things\Usables\LockedDoor.cs" />
     <Compile Include="Things\Usables\IUsable.cs" />
     <Compile Include="UI\Console\ConsoleUtils.cs" />
+    <Compile Include="UI\Display\TextDisplayer.cs" />
     <Compile Include="Utils\BindableProperty.cs" />
     <Compile Include="Utils\Extensions\GameStateExtensions\ThingHelpers.cs" />
     <Compile Include="Utils\Extensions\ObjectHelpers.cs" />

@@ -4,7 +4,7 @@ using The_Bloodfall_Catacombs.Commands;
 using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.Utils.Extensions;
 using The_Bloodfall_Catacombs.Utils.Extensions.GameStateExtensions;
-using static System.Console;
+using static The_Bloodfall_Catacombs.UI.Display.TextDisplayer;
 namespace The_Bloodfall_Catacombs.Things.Usables
 {
 	public class Key : Thing, IUsable
@@ -19,7 +19,7 @@ namespace The_Bloodfall_Catacombs.Things.Usables
 
 			if (preposition == null)
 			{
-				WriteLine($"Use {Name} with what?");
+				DisplayLine($"Use {Name} with what?");
 				return;
 			}
 
@@ -29,13 +29,13 @@ namespace The_Bloodfall_Catacombs.Things.Usables
 			var subject = gameState.GetAllThingsUserCanInteractWith().GetThingByName(subjectName);
 			if (subject == null)
 			{
-				WriteLine($"I can't see a {subject} anywhere.");
+				DisplayLine($"I can't see a {subject} anywhere.");
 				return;
 			}
 				
 			if(!(subject is IUsableWith usable))
 			{
-				WriteLine($"You cannot use the {Name} with the {subject.Name}.");
+				DisplayLine($"You cannot use the {Name} with the {subject.Name}.");
 				return;
 			}
 				

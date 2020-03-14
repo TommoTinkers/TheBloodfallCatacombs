@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.Things;
 
 namespace The_Bloodfall_Catacombs.Rooms
@@ -32,12 +33,6 @@ namespace The_Bloodfall_Catacombs.Rooms
 		public void SetExits(params (ExitDirection direction, Room room)[] exits)
 		{
 			this.exits = exits.ToDictionary(exit => exit.direction, exit => exit.room);
-		}
-
-
-		public string LookDescription()
-		{
-			return $"{Description}\nIn this room there are: {GetThingsDescription()}";
 		}
 	}
 }

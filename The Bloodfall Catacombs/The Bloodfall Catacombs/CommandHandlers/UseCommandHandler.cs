@@ -4,7 +4,7 @@ using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.Things.Usables;
 using The_Bloodfall_Catacombs.Utils.Extensions;
 using The_Bloodfall_Catacombs.Utils.Extensions.GameStateExtensions;
-using static System.Console;
+using static The_Bloodfall_Catacombs.UI.Display.TextDisplayer;
 namespace The_Bloodfall_Catacombs.CommandHandlers
 {
 	public class UseCommandHandler
@@ -19,13 +19,13 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 
 			if (thingToUse == null)
 			{
-				WriteLine($"I can't see a {thingToUseInput} anywhere.");
+				DisplayLine($"I can't see a {thingToUseInput} anywhere.");
 				return;
 			}
 
 			if(!(thingToUse is IUsable usable))
 			{
-				WriteLine("You cannot use this.");
+				DisplayLine("You cannot use this.");
 				return;
 			}
 			usable.Use(gameState, arguments.Skip(1));

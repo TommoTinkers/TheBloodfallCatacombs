@@ -1,3 +1,4 @@
+using static The_Bloodfall_Catacombs.UI.Display.TextDisplayer;
 using static System.Console;
 
 namespace The_Bloodfall_Catacombs.UI.Console
@@ -6,14 +7,14 @@ namespace The_Bloodfall_Catacombs.UI.Console
 	{
 		public static void SetWindowTitleToCurrentLocation(string location)
 		{
-			System.Console.Title = $"{GameInfo.GAME_TITLE} - Current location: '{location}'";
+			Title = $"{GameInfo.GAME_TITLE} - Current location: '{location}'";
 		}
 		
 		public static string GetLine(string prompt = null)
 		{
 			if (prompt != null)
 			{
-				WriteLine(prompt);
+				DisplayLine(prompt);
 			}
 			
 			Write("->");

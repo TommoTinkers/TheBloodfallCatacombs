@@ -11,6 +11,7 @@ namespace The_Bloodfall_Catacombs.Commands
 			{"move", Command.Move},
 			{"go", Command.Move},
 			{"take", Command.Take},
+			{"pickup", Command.Take},
 			{"drop", Command.Drop},
 			{"inventory", Command.Inventory},
 			{"look at", Command.LookAt},

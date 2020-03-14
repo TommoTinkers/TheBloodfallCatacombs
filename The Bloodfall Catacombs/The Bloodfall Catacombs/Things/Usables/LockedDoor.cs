@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
-using static System.Console;
+using static The_Bloodfall_Catacombs.UI.Display.TextDisplayer;
 
 namespace The_Bloodfall_Catacombs.Things.Usables
 {
@@ -21,11 +21,11 @@ namespace The_Bloodfall_Catacombs.Things.Usables
 		{
 			if (isLocked)
 			{
-				WriteLine("This door is locked.");
+				DisplayLine("This door is locked.");
 				return;
 			}
 			
-			WriteLine($"YOU USED THE {Name}");
+			DisplayLine($"YOU USED THE {Name}");
 			gameState.MoveTo(exit);
 		}
 
@@ -34,10 +34,10 @@ namespace The_Bloodfall_Catacombs.Things.Usables
 			if (thing == key)
 			{
 				isLocked = false;
-				WriteLine("You turn the key in the lock, and are rewarded with the sound of the bolt releasing.");
+				DisplayLine("You turn the key in the lock, and are rewarded with the sound of the bolt releasing.");
 				return;
 			}
-			WriteLine("This has no effect.");
+			DisplayLine("This has no effect.");
 		}
 	}
 }

@@ -4,15 +4,16 @@ using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.Utils.Extensions;
 using The_Bloodfall_Catacombs.Utils.Extensions.GameStateExtensions;
-using static System.Console;
+using static The_Bloodfall_Catacombs.UI.Display.TextDisplayer;
 
 namespace The_Bloodfall_Catacombs.CommandHandlers
 {
-	public class Handlers
+	public static class Handlers
 	{
 		public static void HandleLookCommand(GameState gameState, IEnumerable<string> arguments)
 		{
-			WriteLine(gameState.Look());
+			DisplayLine(gameState.CurrentRoom.Value.Description);
+			DisplayLine(gameState.CurrentRoom.Value.Things.GetDisplayString("There is nothing in this room", "In this room there is a", "In here are the following things..."));
 		}
 
 		public static void HandleMoveCommand(GameState gameState, IEnumerable<string> arguments)
@@ -38,12 +39,12 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 					break;
 			}
 
-			WriteLine(response);
+			DisplayLine(response);
 		}
 
 		public static void HandleBadCommand(GameState arg1, IEnumerable<string> arg2)
 		{
-			WriteLine("I do not know how to do this.");
+			DisplayLine("I do not know how to do this.");
 		}
 
 		public static void HandleDropCommand(GameState gameState, IEnumerable<string> arguments)
@@ -53,13 +54,13 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 			
 			if (objectToDrop == null)
 			{
-				WriteLine("You are not carrying that.");
+				DisplayLine("You are not carrying that.");
 				return;
 			}
 			
 			gameState.CurrentRoom.Value.AddThings(objectToDrop);
 			gameState.PlayerState.Inventory.RemoveThing(objectToDrop);
-			WriteLine($"You dropped the {objectToDrop.Name}!");
+			DisplayLine($"You dropped the {objectToDrop.Name}!");
 		}
 
 		public static void HandleTakeCommand(GameState gameState, IEnumerable<string> arguments)
@@ -68,24 +69,25 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 			var objectToTake = gameState.CurrentRoom.Value.Things.GetThingByName(nameOfThingInput);
 			if (objectToTake == null)
 			{
-				WriteLine($"There is no {nameOfThingInput} here.");
+				DisplayLine($"There is no {nameOfThingInput} here.");
 				return;
 			}
 			if (!objectToTake.IsTakeable)
 			{
-				WriteLine("You cannot take that");
+				DisplayLine("You cannot take that");
 			}
 			else
 			{
 				gameState.CurrentRoom.Value.RemoveThing(objectToTake);
 				gameState.PlayerState.Inventory.AddThings(objectToTake);
-				WriteLine($"You took the {objectToTake.Name}!");
+				DisplayLine($"You took the {objectToTake.Name}!");
 			}
 		}
 
 		public static void HandleInventoryCommand(GameState gameState, IEnumerable<string> arguments)
 		{
-			WriteLine($"You are carrying...{gameState.PlayerState.Inventory.GetThingsDescription()}");
+			DisplayLine(gameState.PlayerState.Inventory.Things.GetDisplayString("You are not carrying anything.",
+				"You are carrying a", "You are carrying..."));
 		}
 
 		public static void HandleLookAtCommand(GameState gameState, IEnumerable<string> arguments)
@@ -93,7 +95,7 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 			var subject = arguments.FirstOrDefault();
 			if (string.IsNullOrWhiteSpace(subject))
 			{
-				WriteLine("Look at what?");
+				DisplayLine("Look at what?");
 				return;
 			}
 
@@ -101,10 +103,10 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 			var thingToLookAt = things.FirstOrDefault(t => t.Name.ToLower() == subject);
 			if (thingToLookAt == null)
 			{
-				WriteLine($"I can't see a {subject} anywhere.");
+				DisplayLine($"I can't see a {subject} anywhere.");
 				return;
 			}
-			WriteLine(thingToLookAt.Description);
+			DisplayLine(thingToLookAt.Description);
 		}
 	}
 }
