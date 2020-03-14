@@ -40,5 +40,10 @@ namespace The_Bloodfall_Catacombs.State
 			currentRoom.Value = destinationRoom;
 			return $"You have moved into the {currentRoom.Value.Name}.";
 		}
+
+		public void MoveTo(Room destination)
+		{
+			currentRoom.Value = destination;
+		}
 	}
 }

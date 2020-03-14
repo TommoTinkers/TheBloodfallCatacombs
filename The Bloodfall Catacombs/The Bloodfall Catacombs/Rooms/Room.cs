@@ -19,10 +19,9 @@ namespace The_Bloodfall_Catacombs.Rooms
 		public Room this[ExitDirection direction]
 		{
 			get { return exits.FirstOrDefault(kvp => kvp.Key == direction).Value; }
-			
 		}
 
-		private Dictionary<ExitDirection, Room> exits;
+		private Dictionary<ExitDirection, Room> exits = new Dictionary<ExitDirection, Room>();
 
 		public Room(string name, string description)
 		{

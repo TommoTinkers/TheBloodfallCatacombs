@@ -27,9 +27,8 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 			{
 				WriteLine("You cannot use this.");
 				return;
-				
 			}
-			usable.Use(arguments.Skip(1));
+			usable.Use(gameState, arguments.Skip(1));
 		}
 	}
 }

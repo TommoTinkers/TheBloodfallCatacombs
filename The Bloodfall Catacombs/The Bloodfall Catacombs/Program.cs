@@ -17,14 +17,15 @@ namespace The_Bloodfall_Catacombs
 		{
 			WriteLine("Welcome to THE BLOODFALL CATACOMBS");
 			var cell = new Room("Cell", "A small cell with no windows");
-			var otherCell = new Room("Opposite Cell", "A small cell with no windows");
+			var laboratory = new Room("Laboratory", "This room looks like a laboratory that has been smashed up.");
 			var corridor = new Room("Corridor", "A fittingly omnious corridor, seemingly endless in both directions." );
 
 			var skeleton = new Thing("Skeleton", "Its a skeleton. It looks like it has been here for a long time.",
 				false);
-			var key = new Thing("Key", "A large iron key.", true);
-			var door = new Door("Door", "A large wooden door with a keyhole", false);
+			var key = new Key("Key", "A large iron key.", true);
+			var door = new LockedDoor("Door", "A large wooden door with a keyhole", false, key, laboratory);
 			
+			laboratory.SetExits((ExitDirection.South, corridor));
 			corridor.AddThings(door);
 			cell.SetExits((ExitDirection.North, corridor));
 			cell.AddThings(skeleton, key);
