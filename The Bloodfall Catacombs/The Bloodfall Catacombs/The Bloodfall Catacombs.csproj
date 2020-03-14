@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="CommandHandler.cs" />
     <Compile Include="CommandHandlers\Handlers.cs" />
+    <Compile Include="CommandHandlers\UseCommandHandler.cs" />
     <Compile Include="Commands\CommandParser.cs" />
     <Compile Include="GameInfo.cs" />
     <Compile Include="Player\PlayerState.cs" />
@@ -49,8 +50,12 @@
     <Compile Include="Rooms\Room.cs" />
     <Compile Include="State\GameState.cs" />
     <Compile Include="Things\ThingContainer.cs" />
+    <Compile Include="Things\Usables\Door.cs" />
+    <Compile Include="Things\Usables\IUsable.cs" />
     <Compile Include="UI\Console\ConsoleUtils.cs" />
     <Compile Include="Utils\BindableProperty.cs" />
+    <Compile Include="Utils\Extensions\GameStateExtensions\ThingHelpers.cs" />
+    <Compile Include="Utils\Extensions\ObjectHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\Properties" />

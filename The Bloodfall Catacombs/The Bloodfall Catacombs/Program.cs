@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using The_Bloodfall_Catacombs.CommandHandlers;
+﻿using The_Bloodfall_Catacombs.CommandHandlers;
 using The_Bloodfall_Catacombs.Commands;
 using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.Things;
+using The_Bloodfall_Catacombs.Things.Usables;
 using static The_Bloodfall_Catacombs.UI.Console.ConsoleUtils;
 using static System.Console;
 
@@ -17,12 +17,15 @@ namespace The_Bloodfall_Catacombs
 		{
 			WriteLine("Welcome to THE BLOODFALL CATACOMBS");
 			var cell = new Room("Cell", "A small cell with no windows");
+			var otherCell = new Room("Opposite Cell", "A small cell with no windows");
 			var corridor = new Room("Corridor", "A fittingly omnious corridor, seemingly endless in both directions." );
 
 			var skeleton = new Thing("Skeleton", "Its a skeleton. It looks like it has been here for a long time.",
 				false);
 			var key = new Thing("Key", "A large iron key.", true);
+			var door = new Door("Door", "A large wooden door with a keyhole", false);
 			
+			corridor.AddThings(door);
 			cell.SetExits((ExitDirection.North, corridor));
 			cell.AddThings(skeleton, key);
 			
@@ -57,6 +60,7 @@ namespace The_Bloodfall_Catacombs
 			commandHandler.AddCommandHandler(Command.Inventory, Handlers.HandleInventoryCommand);
 			commandHandler.AddCommandHandler(Command.BadCommand, Handlers.HandleBadCommand);
 			commandHandler.AddCommandHandler(Command.LookAt, Handlers.HandleLookAtCommand);
+			commandHandler.AddCommandHandler(Command.Use, UseCommandHandler.HandleUseCommand);
 
 			return commandHandler;
 		}

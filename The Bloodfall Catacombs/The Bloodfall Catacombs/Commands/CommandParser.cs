@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using static System.Console;
 
 namespace The_Bloodfall_Catacombs.Commands
 {
@@ -14,7 +13,8 @@ namespace The_Bloodfall_Catacombs.Commands
 			{"take", Command.Take},
 			{"drop", Command.Drop},
 			{"inventory", Command.Inventory},
-			{"look at", Command.LookAt}
+			{"look at", Command.LookAt},
+			{"use", Command.Use}
 		};
 		
 		public static (Command, IEnumerable<string>) GetCommand(string input)

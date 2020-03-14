@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
-using The_Bloodfall_Catacombs.Things;
+using The_Bloodfall_Catacombs.Utils.Extensions;
+using The_Bloodfall_Catacombs.Utils.Extensions.GameStateExtensions;
 using static System.Console;
 
 namespace The_Bloodfall_Catacombs.CommandHandlers
@@ -48,14 +48,8 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 
 		public static void HandleDropCommand(GameState gameState, IEnumerable<string> arguments)
 		{
-			var objectName = arguments.FirstOrDefault();
-			if (string.IsNullOrEmpty(objectName))
-			{
-				WriteLine("Drop what?");	
-			}
-
-			var inventoryObjects = gameState.PlayerState.Inventory.Things;
-			var objectToDrop = inventoryObjects.FirstOrDefault(o => o.Name.ToLower() == objectName);
+			var nameOfThingInput = arguments.FirstOrDefault();
+			var objectToDrop = gameState.PlayerState.Inventory.Things.GetThingByName(nameOfThingInput);
 			
 			if (objectToDrop == null)
 			{
@@ -70,22 +64,13 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 
 		public static void HandleTakeCommand(GameState gameState, IEnumerable<string> arguments)
 		{
-			var objectName = arguments.FirstOrDefault();
-
-			if (string.IsNullOrEmpty(objectName))
-			{
-				WriteLine("Take what?");	
-			}
-			
-			var roomObjects = gameState.CurrentRoom.Value.Things;
-			var objectToTake = roomObjects.FirstOrDefault(o => o.Name.ToLower() == objectName);
-
+			var nameOfThingInput = arguments.FirstOrDefault();
+			var objectToTake = gameState.CurrentRoom.Value.Things.GetThingByName(nameOfThingInput);
 			if (objectToTake == null)
 			{
-				WriteLine("There isn't one of those here");
+				WriteLine($"There is no {nameOfThingInput} here.");
 				return;
 			}
-			
 			if (!objectToTake.IsTakeable)
 			{
 				WriteLine("You cannot take that");
@@ -112,7 +97,7 @@ namespace The_Bloodfall_Catacombs.CommandHandlers
 				return;
 			}
 
-			var things = gameState.CurrentRoom.Value.Things.Concat(gameState.PlayerState.Inventory.Things);
+			var things = gameState.GetAllThingsUserCanInteractWith();
 			var thingToLookAt = things.FirstOrDefault(t => t.Name.ToLower() == subject);
 			if (thingToLookAt == null)
 			{
