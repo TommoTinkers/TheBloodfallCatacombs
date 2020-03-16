@@ -1,9 +1,11 @@
-﻿using The_Bloodfall_Catacombs.CommandHandlers;
+﻿using System;
+using The_Bloodfall_Catacombs.CommandHandlers;
 using The_Bloodfall_Catacombs.Commands;
 using The_Bloodfall_Catacombs.Rooms;
 using The_Bloodfall_Catacombs.State;
 using The_Bloodfall_Catacombs.Things;
 using The_Bloodfall_Catacombs.Things.Usables;
+using The_Bloodfall_Catacombs.UI.Display;
 using static The_Bloodfall_Catacombs.UI.Console.ConsoleUtils;
 using static The_Bloodfall_Catacombs.UI.Display.TextDisplayer;
 
@@ -15,7 +17,10 @@ namespace The_Bloodfall_Catacombs
 
 		public static void Main()
 		{
-			DisplayLine("Welcome to THE BLOODFALL CATACOMBS");
+			SetupWindow();
+
+			DisplayLine("[cyan]Welcome to", OutputType.Center);
+			DisplayLine("[magenta]THE BLOODFALL CATACOMBS[/]", OutputType.Center);	
 			var cell = new Room("Cell", "A small cell with no windows");
 			var laboratory = new Room("Laboratory", "This room looks like a laboratory that has been smashed up.");
 			var corridor = new Room("Corridor", "A fittingly omnious corridor, seemingly endless in both directions." );
@@ -42,7 +47,7 @@ namespace The_Bloodfall_Catacombs
 				gameState.ExecuteCommand(command, arguments);
 			}
 		}
-		
+
 		private static GameState CreateGameState(Room cell)
 		{
 			var commandHandler = CreateCommandHandler();
@@ -65,6 +70,11 @@ namespace The_Bloodfall_Catacombs
 			commandHandler.AddCommandHandler(Command.Use, UseCommandHandler.HandleUseCommand);
 
 			return commandHandler;
+		}
+
+		private static void SetupWindow()
+		{
+			Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
 		}
 	}
 }
