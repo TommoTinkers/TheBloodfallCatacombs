@@ -1,4 +1,3 @@
-using System;
 using static System.Console;
 
 namespace The_Bloodfall_Catacombs.UI.Display
@@ -13,29 +12,29 @@ namespace The_Bloodfall_Catacombs.UI.Display
 	{
 		public static void DisplayLine(string line, OutputType outputType = OutputType.Normal)
 		{
+			var tags = TextTagParser.Parse(line);
+			
 			switch (outputType)
 			{
 				case OutputType.Normal:
-					ColoredTextDisplay.WriteColoredLine(line);
+					ColoredTextDisplay.WriteColoredLine(tags);
 					break;
 				case OutputType.Center:
-					WriteCentered(line);
+					WriteCenteredLine(tags);
 					break;
 			}
 		}
 
-		private static void WriteCentered(string line)
+		private static void WriteCenteredLine(TagParsedText tags)
 		{
-			var lengthOfContent = line.Length;
+			var lengthOfContent = tags.DisplayText.Length;
 			var widthOfScreen = WindowWidth;
 			var middle = widthOfScreen / 2;
 
 			var startPoint = middle - (lengthOfContent / 2);
 			
 			SetCursorPosition(startPoint, CursorTop);
-			ColoredTextDisplay.WriteColoredLine(line);
+			ColoredTextDisplay.WriteColoredLine(tags);
 		}
-
-
 	}
 }

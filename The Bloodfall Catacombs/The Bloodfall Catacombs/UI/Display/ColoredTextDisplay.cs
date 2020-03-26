@@ -8,50 +8,38 @@ namespace The_Bloodfall_Catacombs.UI.Display
 	public static class ColoredTextDisplay
 	{
 		private static Dictionary<string, ConsoleColor> _foregroundColorTags;
-		public static void WriteColoredLine(string line)
+		public static void WriteColoredLine(TagParsedText tags)
 		{
 			if (_foregroundColorTags == null)
 			{
 				CreateForegroundColorTags();
 			}
-			var currentColor = ForegroundColor;
-			for (var index = 0; index < line.Length; index++)
+
+			var currentForegroundColor = ForegroundColor;
+			
+			for (var index = 0; index < tags.DisplayText.Length; index++)
 			{
-				var character = line[index];
-				if (character == '[')
+				var tag = tags.Tags.FirstOrDefault(t => t.Index == index);
+				if (tag != null)
 				{
-					var indexOfCloseTag = line.IndexOf(']', index);
-					var tag = line.Substring(index + 1, indexOfCloseTag - index - 1);
-
-					if (_foregroundColorTags.ContainsKey(tag))
+					if (_foregroundColorTags.ContainsKey(tag.Label))
 					{
-						ForegroundColor = _foregroundColorTags[tag];
+						ForegroundColor = _foregroundColorTags[tag.Label];
 					}
-					else if (tag == "/")
-					{
-						ForegroundColor = currentColor;
-					}
-					else
-					{
-						throw new Exception($"Console color tag not defined: {tag}");
-					}
-
-					index = indexOfCloseTag;
-				}
-				else
-				{
-					Write(character);	
 				}
 				
+				var character = tags.DisplayText[index];
+				Write(character);
 			}
+
 			Write('\n');
-			ForegroundColor = currentColor;
+			ForegroundColor = currentForegroundColor;
 		}
 
 		private static void CreateForegroundColorTags()
 		{
 			var colors = Enum.GetValues(typeof(ConsoleColor)).Cast<ConsoleColor>();
-
+			
 			_foregroundColorTags = colors.ToDictionary(color => color.ToString().ToLower(), color => color);
 		}
 	}
